@@ -32,8 +32,7 @@ export const { auth, handlers } = NextAuth({
         });
 
         if (!user || !user.hashedPassword) {
-          return null;
-          // throw new Error("Invalid Credentials");
+          throw new Error("Invalid Credentials");
         }
 
         const isCorrectPassword = await bcryptjs.compare(
@@ -42,7 +41,6 @@ export const { auth, handlers } = NextAuth({
         );
 
         if (!isCorrectPassword) {
-          // return null;
           throw new Error("Invalid credentials");
         }
 
