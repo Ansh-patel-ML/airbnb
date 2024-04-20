@@ -7,8 +7,8 @@ export default async function Home() {
       <span>Hello Airbnb</span>
       <ul>
         {getAllUsers?.length > 0 &&
-          getAllUsers.map((val) => {
-            return <li>{val.name}</li>;
+          getAllUsers.map((val, index) => {
+            return <li key={index}>{val.name}</li>;
           })}
       </ul>
       {getAllUsers.length === 0 && <div>No User Found</div>}
