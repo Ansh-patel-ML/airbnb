@@ -7,3 +7,8 @@ body,
 :root {
   height: 100%;
 }
+
+.leaflet-top,
+.leaflet-left {
+  z-index: 998 !important;
+}
