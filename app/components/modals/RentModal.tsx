@@ -8,14 +8,14 @@ import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
-import Map from "../Map";
 import dynamic from "next/dynamic";
+import ImageUpload from "../inputs/ImageUpload";
 
 enum STEPS {
   CATEGORY = 0,
   LOCATION = 1,
-  INFO = 2,
-  IMAGES = 3,
+  INFO = 3,
+  IMAGES = 2,
   DESCRIPTION = 4,
   PRICE = 5,
 }
@@ -35,11 +35,14 @@ const RentModal = () => {
     defaultValues: {
       category: "",
       location: "",
+      imageSrc: "",
     },
   });
 
   const category = watch("category");
   const location = watch("location");
+  const imageSrc = watch("imageSrc");
+
   const Map = useMemo(
     () =>
       dynamic(() => import("../Map"), {
@@ -47,6 +50,7 @@ const RentModal = () => {
       }),
     [location]
   );
+
   const setCustomValue = (id: string, value: any): void => {
     setValue(id, value, {
       shouldDirty: true,
@@ -122,11 +126,29 @@ const RentModal = () => {
     );
   }
 
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Add a photo of your place"
+          subTitle="Show your guests what your place looks like!"
+        />
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => {
+            setCustomValue("imageSrc", value);
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <Modal
       isOpen={rentModal.isOpen}
       onClose={() => {
         rentModal.onClose();
+        setStep(STEPS.CATEGORY);
         reset();
       }}
       onSubmit={onNext}
