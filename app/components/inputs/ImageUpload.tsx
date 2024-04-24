@@ -40,7 +40,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange }) => {
 
         if (res?.status === 200) {
           toast.success("Image uploaded successfully");
-          const imageUrl = `https://pub-${process.env.R2_IMAGE_KEY}.r2.dev/${currentFile.name}`;
+          const imageUrl = `https://pub-${process.env.NEXT_PUBLIC_R2_IMAGE_KEY}.r2.dev/${currentFile.name}`;
           onChange(imageUrl);
         }
       } catch (error) {
